@@ -1,0 +1,22 @@
+services:
+  video-capture:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: video_capture
+    network_mode: host
+    ipc: host
+    environment:
+      - ROS_DOMAIN_ID=0
+    volumes:
+      - /home/eadali/Desktop/eadali/configs/:/configs
+      - /home/eadali/Desktop/eadali/datasets/tartanair2/P000/image_rcam_front:/dataset
+    stdin_open: true
+    tty: true
+    # Override parameters without rebuilding:
+    command:
+      - ros2
+      - launch
+      - video_capture
+      - video_capture.launch.py
+      - resize_factor:=0.35
